@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Interview.Data.Utility;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Interview.Data.DataModel
 {
@@ -75,6 +77,29 @@ namespace Interview.Data.DataModel
             var results = new List<string>();
             try
             {
+
+                var jsonDict = new Dictionary<string, string>();
+
+                var propertiesToSerialize = new[] {"PracticeId", "PracticeId", "PracticeId", "PracticeId"};
+
+                HashSet<string> bannedPropertySet = GetBannedProperties();
+
+
+                string message = "";
+                int index = 0;
+                for (int ii = 0; ii < propertiesToSerialize.Length; ++ii)
+                {
+                    index = ii;
+                    string propertyName = propertiesToSerialize[ii];
+                    var propertyValue = jsonDict[propertiesToSerialize[index]];
+                    if (bannedPropertySet.Contains(propertyName))
+                    {
+                        continue;
+                    }
+
+                    message += propertyValue;
+                }
+
                 string apiMessage = JsonConvert.SerializeObject(this);
                 string result = await ApiResponseWrapper.Send(Remote, RemoteApiRoute, apiMessage);
                 results.Add(String.Format("{0:HH:mm:ss tt} | {1} | {2}", DateTime.Now, result, apiMessage));
@@ -85,6 +110,16 @@ namespace Interview.Data.DataModel
                 results.Add(String.Format("Send Failed while processing ProviderAudit. Error: {0}", e.Message));
                 return results;
             }
+        }
+
+        private HashSet<string> GetBannedProperties()
+        {
+            return  new HashSet<string>(new [] {"PracticeId", "ProviderId"});
+        }
+
+        private static string GetApiRequestMesesage(Dictionary<string, string> jsonDict)
+        {
+            return JObject.FromObject(jsonDict).ToString();
         }
     }
 }

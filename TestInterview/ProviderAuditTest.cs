@@ -12,6 +12,11 @@ namespace TestInterview
     public class ProviderAuditTest
     {
         private IRemoteHelper _remoteHelp;
+        private Mock<IApiResponseWrapper> apiWrap;
+        private Mock<IMingleWebDatabaseAccess> db;
+
+        
+
         private async Task<string> cTask(string val)
         {
             return val;
@@ -23,14 +28,23 @@ namespace TestInterview
             var remoteHelp = new Mock<IRemoteHelper>();
             remoteHelp.Setup(t => t.GenerateRemoteToken()).ReturnsAsync(new RemoteToken() { InstanceURL = "", Token = "" });
             _remoteHelp = remoteHelp.Object;
+
+            db = new Mock<IMingleWebDatabaseAccess>();
+            apiWrap = new Mock<IApiResponseWrapper>();
+
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+
+            apiWrap.Setup(t => t.IsSuccessStatusCode)
+                .Returns(false);
         }
 
         [TestMethod]
         public void ProviderAuditTest_SendValidData()
         {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
-
             apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
@@ -63,48 +77,28 @@ namespace TestInterview
                 Assert.Fail(e.Message);
             }
         }
-        [TestMethod]
-        public void ProviderAuditTest_SendNullProvider()
-        {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
-            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
-            try
-            {
-                var x = new ProviderAudit()
-                {
-                    Remote = _remoteHelp,
-                    ApiResponseWrapper = apiWrap.Object,
-                    DatabaseAccess = db.Object,
-                    PracticeId = 9999,
-                    ProviderId = null,
-                    PatientId = 77777777,
-                    MeasureConcept = "Measure Concept",
-                    AuditDescription = "Audit Desciption",
-                    PatientXId = "1a2b3c",
-                    FileName = "TestFile.txt",
-                    FileReceivedDate = new DateTime(2000, 2, 5),
-                    MeasureNumber = "2",
-                    SubYear = "2014"
-                };
 
-                var result = x.performProcess();
-                result.Wait();
-                var ret = result.Result == null ? "" : result.Result[0];
-                Assert.IsTrue(ret.Contains("\"PracticeId\":9999,\"PatientId\":77777777,\"subYear\":\"2014\",\"MeasureNumber\":\"2\",\"MeasureConcept\":\"Measure Concept\",\"AuditDescription\":\"Audit Desciption\",\"PatientXID\":\"1a2b3c\",\"FileName\":\"TestFile.txt\",\"FileReceivedDate\":\"2000-02-05\""), ret);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail(e.Message);
-            }
+        
+
+        [TestMethod]
+        public void AuditProvider_Should_Not_Serialize_ProviderId()
+        {
+            var providerAudit = GetProviderAudit(); // this will start us off with a null providerId
+
+            // perform the audit
+            var response = providerAudit.performProcess();
+            response.Wait();
+
+            var responseValue = response.Result == null ? "" : response.Result[0];
+
+            // Assert the results
+            Assert.IsFalse(responseValue.Contains("ProviderId"), responseValue);
+
         }
+
         [TestMethod]
         public void ProviderAuditTest_SendNullPatientId()
         {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
             apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
@@ -140,8 +134,6 @@ namespace TestInterview
         [TestMethod]
         public void ProviderAuditTest_SendNullSubYear()
         {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
             apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
@@ -177,8 +169,6 @@ namespace TestInterview
         [TestMethod]
         public void ProviderAuditTest_SendNullReceivedDate()
         {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
             apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
@@ -214,8 +204,8 @@ namespace TestInterview
         [TestMethod]
         public void ProviderAuditTest_SendXidWithColon()
         {
-            var db = new Mock<IMingleWebDatabaseAccess>();
-            var apiWrap = new Mock<IApiResponseWrapper>();
+            db = new Mock<IMingleWebDatabaseAccess>();
+            apiWrap = new Mock<IApiResponseWrapper>();
 
             apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
@@ -249,5 +239,29 @@ namespace TestInterview
                 Assert.Fail(e.Message);
             }
         }
+
+        #region Helpers
+        private ProviderAudit GetProviderAudit()
+        {
+            var providerAudit = new ProviderAudit()
+            {
+                Remote = _remoteHelp,
+                ApiResponseWrapper = apiWrap.Object,
+                DatabaseAccess = db.Object,
+                PracticeId = 9999,
+                ProviderId = null,
+                PatientId = 77777777,
+                MeasureConcept = "Measure Concept",
+                AuditDescription = "Audit Desciption",
+                PatientXId = "1a2b3c",
+                FileName = "TestFile.txt",
+                FileReceivedDate = new DateTime(2000, 2, 5),
+                MeasureNumber = "2",
+                SubYear = "2014"
+            };
+            return providerAudit;
+        }
+        #endregion
+
     }
 }
