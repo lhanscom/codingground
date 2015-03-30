@@ -62,10 +62,6 @@ namespace Interview.Data.DataModel
             return FileReceivedDate.HasValue;
         }
 
-        public bool ShouldSerializeProviderId()
-        {           
-            return ProviderId.HasValue;
-        }
         #endregion
 
         public override string RemoteApiRoute
