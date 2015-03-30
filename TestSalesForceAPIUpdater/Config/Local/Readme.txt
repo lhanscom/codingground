@@ -1,0 +1,1 @@
+﻿For local environment copyt appSettings.config and connectionStrings.config from QA folder and edit all keys accordingly with local values.
