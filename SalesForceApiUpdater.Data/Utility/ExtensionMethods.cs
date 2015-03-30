@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using SalesForceApiUpdater.Data.DataModel;
+using Interview.Data.DataModel;
 
-namespace SalesForceApiUpdater.Data.Utility
+namespace Interview.Data.Utility
 {
     /* These extension methods handle values coming from the database that may contain null values.
      * Since all the values will be sent along an HTTP request they will all be sent as strings.

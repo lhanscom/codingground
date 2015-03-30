@@ -1,9 +1,9 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace SalesForceApiUpdater.Data.Utility
+namespace Interview.Data.Utility
 {
-    public class SalesForceAPIConverter : JsonConverter
+    public class RemoteApiConverter : JsonConverter
     {
 
         public override bool CanConvert(System.Type objectType)

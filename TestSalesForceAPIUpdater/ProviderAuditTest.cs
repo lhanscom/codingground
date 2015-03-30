@@ -2,36 +2,43 @@
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SalesForceApiUpdater.Data.DataAccess;
-using SalesForceApiUpdater.Data.DataModel;
-using SalesForceApiUpdater.Data.SalesForceApi;
+using Interview.Data.DataAccess;
+using Interview.Data.DataModel;
+using Interview.Data.RemoteApi;
 
-namespace TestSalesForceAPIUpdater
+namespace TestInterview
 {
     [TestClass]
     public class ProviderAuditTest
     {
+        private IRemoteHelper _remoteHelp;
         private async Task<string> cTask(string val)
         {
             return val;
+        }
+
+        [TestInitialize]
+        public void Test_Setup()
+        {
+            var remoteHelp = new Mock<IRemoteHelper>();
+            remoteHelp.Setup(t => t.GenerateRemoteToken()).ReturnsAsync(new RemoteToken() { InstanceURL = "", Token = "" });
+            _remoteHelp = remoteHelp.Object;
         }
 
         [TestMethod]
         public void ProviderAuditTest_SendValidData()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
 
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
+                    Remote = _remoteHelp,
                     ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
@@ -60,17 +67,15 @@ namespace TestSalesForceAPIUpdater
         public void ProviderAuditTest_SendNullProvider()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
+                    Remote = _remoteHelp,
                     ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
@@ -99,17 +104,15 @@ namespace TestSalesForceAPIUpdater
         public void ProviderAuditTest_SendNullPatientId()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
+                    Remote = _remoteHelp,
                     ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
@@ -138,17 +141,15 @@ namespace TestSalesForceAPIUpdater
         public void ProviderAuditTest_SendNullSubYear()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
+                    Remote = _remoteHelp,
                     ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
@@ -177,17 +178,15 @@ namespace TestSalesForceAPIUpdater
         public void ProviderAuditTest_SendNullReceivedDate()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(false);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
+                    Remote = _remoteHelp,
                     ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
@@ -216,19 +215,17 @@ namespace TestSalesForceAPIUpdater
         public void ProviderAuditTest_SendXidWithColon()
         {
             var db = new Mock<IMingleWebDatabaseAccess>();
-            var sfHelp = new TestSalesForceHelper();
             var apiWrap = new Mock<IApiResponseWrapper>();
 
-            apiWrap.Setup(t => t.getResponse(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<ISalesForceHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
+            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>())).Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
             apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
             try
             {
-                var authToken = sfHelp.GenerateSfTokenSync();
                 var x = new ProviderAudit()
                 {
-                    SalesForce = sfHelp,
-                    //ApiResponseWrapper = apiWrap.Object,
+                    Remote = _remoteHelp,
+                    ApiResponseWrapper = apiWrap.Object,
                     DatabaseAccess = db.Object,
                     PracticeId = 9999,
                     ProviderId = 8888,
@@ -245,8 +242,7 @@ namespace TestSalesForceAPIUpdater
                 var result = x.performProcess();
                 result.Wait();
                 var ret = result.Result == null ? "" : result.Result[0];
-                Assert.IsTrue(ret.Contains("{\"PracticeId\":9999,\"ProviderId\":8888,\"PatientId\":77777777,\"subYear\":\"2014\",\"MeasureNumber\":\"2\",\"MeasureConcept\":\"Measure Concept\",\"AuditDescription\":\"Audit Desciption\",\"PatientXID\":\"XID-1a2b3c\",\"FileName\":\"TestFile.txt\",\"FileReceivedDate\":\"2000-02-05\"}"));
-                Assert.IsTrue(ret.Contains("Error: ProviderAudit:Could not process because the Practice Id was not found.  Practice ID: 9999"));
+                Assert.IsTrue(ret.Contains("{\"PracticeId\":9999,\"ProviderId\":8888,\"PatientId\":77777777,\"subYear\":\"2014\",\"MeasureNumber\":\"2\",\"MeasureConcept\":\"Measure Concept\",\"AuditDescription\":\"Audit Desciption\",\"PatientXID\":\"XID-1a2b3c\",\"FileName\":\"TestFile.txt\",\"FileReceivedDate\":\"2000-02-05\"}"), String.Format("API Message incorrect. Results: {0}", ret));
             }
             catch (Exception e)
             {

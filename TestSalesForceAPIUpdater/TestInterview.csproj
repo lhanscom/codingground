@@ -103,39 +103,19 @@
   <ItemGroup>
     <Compile Include="TestSalesForceHelper.cs" />
     <Compile Include="ProviderAuditTest.cs" />
-    <Compile Include="XMLTrackingProcessorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Config\.tfignore" />
-    <None Include="Config\AppSettings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\ConnectionStrings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Config\Dev\AppSettings.config" />
-    <None Include="Config\Dev\ConnectionStrings.config" />
-    <None Include="Config\Local\.tfignore" />
-    <None Include="Config\Local\AppSettings.config" />
-    <None Include="Config\Local\ConnectionStrings.config" />
-    <None Include="Config\Prod\AppSettings.config" />
-    <None Include="Config\Prod\ConnectionStrings.config" />
-    <None Include="Config\QA\AppSettings.config" />
-    <None Include="Config\QA\ConnectionStrings.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SalesForceApiUpdater.Data\SalesForceApiUpdater.Data.csproj">
+    <ProjectReference Include="..\SalesForceApiUpdater.Data\Interview.Data.csproj">
       <Project>{7be8b84b-cd75-4cf3-a028-9bde20f20329}</Project>
-      <Name>SalesForceApiUpdater.Data</Name>
+      <Name>Interview.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Config\Local\Readme.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -165,8 +145,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>C:\Windows\System32\xcopy /y "$(ProjectDir)Config\$(ConfigurationName)\appSettings.config" "$(ProjectDir)Config\"
-C:\Windows\System32\xcopy /y "$(ProjectDir)Config\$(ConfigurationName)\connectionStrings.config" "$(ProjectDir)Config\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

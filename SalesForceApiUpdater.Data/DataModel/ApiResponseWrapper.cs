@@ -5,19 +5,19 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using SalesForceApiUpdater.Data.SalesForceApi;
+using Interview.Data.RemoteApi;
 
-namespace SalesForceApiUpdater.Data.DataModel
+namespace Interview.Data.DataModel
 {
-    public class ApiResponseWrapper : SalesForceApiUpdater.Data.DataModel.IApiResponseWrapper
+    public class ApiResponseWrapper : IApiResponseWrapper
     {
         public bool IsSuccessStatusCode { get; set; }
-        public async Task<string> getResponse(ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage = "")
+        public async Task<string> getResponse(IRemoteHelper _remote, string salesForceApiRoute, string apiMessage = "")
         {
             var queryClient = new HttpClient();
 
             // generate an authorization token
-            var token = await salesForce.GenerateSFToken();
+            var token = await _remote.GenerateRemoteToken();
 
             var restQuery = token.InstanceURL + salesForceApiRoute;
 
@@ -40,12 +40,12 @@ namespace SalesForceApiUpdater.Data.DataModel
         }
 
 
-        public async Task<string> Send(ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage)
+        public async Task<string> Send(IRemoteHelper _remote, string salesForceApiRoute, string apiMessage)
         {
             var queryClient = new HttpClient();
 
             // generate an authorization token
-            var token = await salesForce.GenerateSFToken();
+            var token = await _remote.GenerateRemoteToken();
 
             var restQuery = token.InstanceURL + salesForceApiRoute;
 

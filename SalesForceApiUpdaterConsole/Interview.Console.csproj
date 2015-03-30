@@ -112,28 +112,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="EventResultInfoObject.cs" />
-    <Compile Include="SendAlert.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Config\AppSettings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Config\ConnectionStrings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Config\Dev\AppSettings.config" />
-    <None Include="Config\Dev\ConnectionStrings.config" />
-    <None Include="Config\Local\AppSettings.config" />
-    <None Include="Config\Local\ConnectionStrings.config" />
-    <None Include="Config\Prod\AppSettings.config" />
-    <None Include="Config\Prod\ConnectionStrings.config" />
-    <None Include="Config\QA\AppSettings.config" />
-    <None Include="Config\QA\ConnectionStrings.config" />
-    <None Include="Fody.targets" />
-    <Content Include="Config\Local\Readme.txt" />
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -143,9 +126,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SalesForceApiUpdater.Data\SalesForceApiUpdater.Data.csproj">
+    <ProjectReference Include="..\SalesForceApiUpdater.Data\Interview.Data.csproj">
       <Project>{7be8b84b-cd75-4cf3-a028-9bde20f20329}</Project>
-      <Name>SalesForceApiUpdater.Data</Name>
+      <Name>Interview.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +148,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -177,10 +157,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Import Project="Fody.targets" />
   <PropertyGroup>
-    <PreBuildEvent>C:\Windows\System32\xcopy /y "$(ProjectDir)Config\$(ConfigurationName)\appSettings.config" "$(ProjectDir)Config\"
-C:\Windows\System32\xcopy /y "$(ProjectDir)Config\$(ConfigurationName)\connectionStrings.config" "$(ProjectDir)Config\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

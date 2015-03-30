@@ -93,39 +93,19 @@
     <Compile Include="DataAccess\ConnectionAccess.cs" />
     <Compile Include="DataAccess\IMingleWebDatabaseAccess.cs" />
     <Compile Include="DataAccess\MingleWebDatabaseAccess.cs" />
-    <Compile Include="DataAccess\DatabaseScripts.cs" />
     <Compile Include="DataModel\ApiResponseWrapper.cs" />
-    <Compile Include="DataModel\ClientInfoObject.cs" />
-    <Compile Include="DataModel\ClientPayment.cs" />
-    <Compile Include="DataModel\ClientPaymentProcessor.cs" />
     <Compile Include="DataModel\IApiResponseWrapper.cs" />
-    <Compile Include="DataModel\ISalesForceProcessor.cs" />
-    <Compile Include="DataModel\PracticeInfoObject.cs" />
-    <Compile Include="DataModel\PracticeProviderConsent.cs" />
+    <Compile Include="DataModel\IRemoteProcessor.cs" />
     <Compile Include="DataModel\ProviderAudit.cs" />
-    <Compile Include="DataModel\ProviderInfoObject.cs" />
-    <Compile Include="DataModel\SalesForceProcessorBase.cs" />
-    <Compile Include="DataModel\StepStatusInfoObject.cs" />
-    <Compile Include="DataModel\SubmissionConsentProcessor.cs" />
-    <Compile Include="DataModel\SelectedMethodInfoObject.cs" />
-    <Compile Include="DataModel\XmlFileRequestProcessor.cs" />
-    <Compile Include="DataModel\XMLFileReRequested.cs" />
-    <Compile Include="DataModel\XMLTrackingObject.cs" />
-    <Compile Include="DataModel\XMLTrackingProcessor.cs" />
-    <Compile Include="Enums\ApiType.cs" />
+    <Compile Include="DataModel\RemoteProcessorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaleForceApi\SalesForceHelper.cs" />
-    <Compile Include="SaleForceApi\SFToken.cs" />
+    <Compile Include="RemoteApi\RemoteHelper.cs" />
+    <Compile Include="RemoteApi\RemoteToken.cs" />
     <Compile Include="Utility\ExtensionMethods.cs" />
-    <Compile Include="Utility\SalesForceAPIConverter.cs" />
+    <Compile Include="Utility\RemoteApiConverter.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Fody.targets" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataService\" />
@@ -138,7 +118,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
-  <Import Project="Fody.targets" />
   <!--<Import Project="Fody.targets" /> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

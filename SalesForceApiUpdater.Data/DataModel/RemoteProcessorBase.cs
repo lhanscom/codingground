@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using SalesForceApiUpdater.Data.DataAccess;
-using SalesForceApiUpdater.Data.SalesForceApi;
+﻿using Interview.Data.DataAccess;
+using Interview.Data.RemoteApi;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SalesForceApiUpdater.Data.DataModel
+namespace Interview.Data.DataModel
 {
-    public abstract class SalesForceProcessorBase : ISalesForceProcessor
+    public abstract class RemoteProcessorBase : IRemoteProcessor
     {
         private IMingleWebDatabaseAccess databaseAccess = new MingleWebDatabaseAccess();
         
-        private ISalesForceHelper salesForce = new SalesForceHelper();
+        private IRemoteHelper _remote = new RemoteHelper();
         private IApiResponseWrapper apiResponseWrapper = new ApiResponseWrapper();
         [JsonIgnore]
         public virtual IMingleWebDatabaseAccess DatabaseAccess
@@ -24,13 +24,13 @@ namespace SalesForceApiUpdater.Data.DataModel
         }
 
         [JsonIgnore]
-        public abstract string SalesForceApiRoute { get; set; }
+        public abstract string RemoteApiRoute { get; set; }
 
         [JsonIgnore]
-        public virtual ISalesForceHelper SalesForce
+        public virtual IRemoteHelper Remote
         {
-            get { return salesForce; }
-            set { salesForce = value; }
+            get { return _remote; }
+            set { _remote = value; }
         }
 
         [JsonIgnore]

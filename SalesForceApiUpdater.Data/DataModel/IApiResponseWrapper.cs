@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Interview.Data.RemoteApi;
 
-namespace SalesForceApiUpdater.Data.DataModel
+namespace Interview.Data.DataModel
 {
     public interface IApiResponseWrapper
     {
-        Task<string> getResponse(SalesForceApiUpdater.Data.SalesForceApi.ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage = "");
-        Task<string> Send(SalesForceApi.ISalesForceHelper salesForce, string salesForceApiRoute, string apiMessage);
+        Task<string> getResponse(IRemoteHelper _remote, string salesForceApiRoute, string apiMessage = "");
+        Task<string> Send(RemoteApi.IRemoteHelper _remote, string salesForceApiRoute, string apiMessage);
         bool IsSuccessStatusCode { get; set; }
     }
 }

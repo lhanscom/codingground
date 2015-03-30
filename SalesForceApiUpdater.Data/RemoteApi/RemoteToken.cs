@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace SalesForceApiUpdater.Data.SalesForceApi
+namespace Interview.Data.RemoteApi
 {
     // Represents a Sales Force token that is necessary to call API
     [DataContract]
-    public class SFToken
+    public class RemoteToken
     {
         #region Properties
         [DataMember(Name = "access_token")]

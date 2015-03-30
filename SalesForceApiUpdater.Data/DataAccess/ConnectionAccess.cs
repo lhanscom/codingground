@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Configuration;
 
-namespace SalesForceApiUpdater.Data
+namespace Interview.Data
 {
     public abstract class ConnectionAccess
     {
 
         protected string TrackingConnectionString
         {
-            get 
-            {
-                return ConfigurationManager.ConnectionStrings["TrackingDatabase"].ConnectionString;
-            }
+            get { return ""; }
         }
 
         protected string ClientDataConnectionString
         {
-            get
-            {
-                return ConfigurationManager.ConnectionStrings["PQRSInfoDatabase"].ConnectionString;
-            }
+            get { return ""; }
         }
 
         protected string AnalyticsDataConnectionString
         {
-            get
-            {
-                return ConfigurationManager.ConnectionStrings["AnalyticsInfoDatabase"].ConnectionString;
-            }
+            get { return ""; }
         }
     }
 }

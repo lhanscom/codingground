@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-namespace SalesForceApiUpdater.Data.DataAccess
+namespace Interview.Data.DataAccess
 {
     public interface IMingleWebDatabaseAccess
     {
@@ -13,7 +13,7 @@ namespace SalesForceApiUpdater.Data.DataAccess
         DataTable GetClientData(int recordId);
 
         DataTable GetPracticeData(int recordId);
-
+        DataTable GetProviderData(int practiceId);
         DataTable GetProvidersInPractice(int practiceId);
 
         bool IsProviderAndYearPresent(int providerId, string subYear);
