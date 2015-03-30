@@ -1,0 +1,11 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SalesForceApiUpdaterConsole/bin
+/TestSalesForceAPIUpdater/bin/QA
+/TestSalesForceAPIUpdater/obj/QA
+/SalesForceApiUpdaterConsole/obj/QA
+*.suo
+SalesForceApiUpdater.Data/bin/
+SalesForceApiUpdater.Data/obj/
