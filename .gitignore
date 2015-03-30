@@ -9,3 +9,7 @@
 *.suo
 SalesForceApiUpdater.Data/bin/
 SalesForceApiUpdater.Data/obj/
+Interview.Data/bin/
+Interview.Data/obj/
+TestInterview/bin/
+TestInterview/obj/
