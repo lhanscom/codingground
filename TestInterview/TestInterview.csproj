@@ -6,7 +6,7 @@
     <ProjectGuid>{F4306EF0-BEC8-4638-B21F-F9054F504D1D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestSalesForceAPIUpdater</RootNamespace>
+    <RootNamespace>TestInterview</RootNamespace>
     <AssemblyName>TestSalesForceAPIUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -108,7 +108,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SalesForceApiUpdater.Data\Interview.Data.csproj">
+    <ProjectReference Include="..\Interview.Data\Interview.Data.csproj">
       <Project>{7be8b84b-cd75-4cf3-a028-9bde20f20329}</Project>
       <Name>Interview.Data</Name>
     </ProjectReference>

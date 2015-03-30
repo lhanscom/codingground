@@ -7,8 +7,8 @@
     <ProjectGuid>{7BE8B84B-CD75-4CF3-A028-9BDE20F20329}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SalesForceApiUpdater.Data</RootNamespace>
-    <AssemblyName>SalesForceApiUpdater.Data</AssemblyName>
+    <RootNamespace>Interview.Data</RootNamespace>
+    <AssemblyName>Interview.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

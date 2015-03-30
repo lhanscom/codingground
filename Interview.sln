@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interview.Data", "SalesForceApiUpdater.Data\Interview.Data.csproj", "{7BE8B84B-CD75-4CF3-A028-9BDE20F20329}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interview.Data", "Interview.Data\Interview.Data.csproj", "{7BE8B84B-CD75-4CF3-A028-9BDE20F20329}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DE121717-4BAF-4DB8-AA09-5A989795F8B5}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DE1217
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInterview", "TestSalesForceAPIUpdater\TestInterview.csproj", "{F4306EF0-BEC8-4638-B21F-F9054F504D1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInterview", "TestInterview\TestInterview.csproj", "{F4306EF0-BEC8-4638-B21F-F9054F504D1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
