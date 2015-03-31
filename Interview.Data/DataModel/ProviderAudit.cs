@@ -24,14 +24,11 @@ namespace Interview.Data.DataModel
             set { _remoteApiRoute = value; }
         }
 
-        public override async Task<List<string>> performProcess()
+        public override List<string> performProcess()
         {
             var results = new List<string>();
             try
             {
-
-                var jsonDict = new Dictionary<string, string>();
-
                 HashSet<string> bannedPropertySet = GetBannedProperties();
 
 
@@ -54,8 +51,8 @@ namespace Interview.Data.DataModel
                 }
 
                 string apiMessage = message;
-                string result = await ApiResponseWrapper.Send(Remote, RemoteApiRoute, apiMessage);
-                results.Add(String.Format("{0:HH:mm:ss tt} | {1} | {2}", DateTime.Now, result, apiMessage));
+
+                results.Add(String.Format("{0:HH:mm:ss tt} | {1}", DateTime.Now, apiMessage));
                 return results;
             }
             catch (Exception e)

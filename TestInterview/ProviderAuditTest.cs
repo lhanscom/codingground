@@ -45,42 +45,24 @@ namespace TestInterview
         [TestMethod]
         public void AuditProvider_Should_Not_Serialize_ProviderId()
         {
-            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
             var result = GetProviderAudit().performProcess();
-            result.Wait();
-            var ret = result.Result == null ? "" : result.Result[0];
+            var ret = result == null ? "" : result[0];
             Assert.IsFalse(ret.Contains("ProviderId"));
         }
 
         [TestMethod]
         public void AuditProvider_PatientId_Is_Mapped_Correctly()
         {
-            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
             var result = GetProviderAudit().performProcess();
-            result.Wait();
-            var ret = result.Result == null ? "" : result.Result[0];
+            var ret = result == null ? "" : result[0];
             Assert.IsTrue(ret.Contains("\"PatientId\":\"24\""));
         }
 
         [TestMethod]
         public void AuditProvider_FileName_Is_Mapped_Correctly()
         {
-            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-            apiWrap.Setup(t => t.IsSuccessStatusCode).Returns(true);
             var result = GetProviderAudit().performProcess();
-            result.Wait();
-            var ret = result.Result == null ? "" : result.Result[0];
+            var ret = result == null ? "" : result[0];
             Assert.IsTrue(ret.Contains("\"FileName\":\"FileName.txt\""));
         }
 

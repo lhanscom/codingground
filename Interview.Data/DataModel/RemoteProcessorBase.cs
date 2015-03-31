@@ -41,6 +41,6 @@ namespace Interview.Data.DataModel
         }
 
 
-        public abstract Task<List<string>> performProcess();
+        public abstract List<string> performProcess();
     }
 }
