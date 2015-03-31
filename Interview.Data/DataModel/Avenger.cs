@@ -47,7 +47,7 @@ namespace Interview.Data.DataModel
 
 
                     message += String.Format("\"{0}\":\"{1}\",", propertyName, propertyValue);
-                    valueIndex++;
+                    
                 }
 
                 string apiMessage = message;

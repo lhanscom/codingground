@@ -14,6 +14,10 @@ namespace TestInterview
     {
 
         /// <summary>
+        /// A contractor who has since been fired, has given us some 
+        /// code that is broken. We wrote these unit tests to diagnose 
+        /// the situation.
+        /// 
         /// We need to serialize some data to send to a web api. That
         /// Web api is cranky and doesn't like it sometimes when we 
         /// serialize a property with a value of null. These tests make
@@ -49,17 +53,20 @@ namespace TestInterview
         }
 
         [TestMethod]
-        public void Serialize_PatientId_Is_Mapped_Correctly()
+        public void Serialize_Should_Serialize_EnemyId_To_Correct_Value()
         {
             // Arrange
             Avenger testObj = GetAvenger();
+            var enemyPropertyName = "EnemyId";
+            var enemyPropertyValue = "24";
 
             // Act
             List<string> result = testObj.Serialize();
 
             // Assert
             string firstResult = result == null ? "" : result[0];
-            Assert.IsTrue(firstResult.Contains("\"EnemyId\":\"24\""));
+            string desiredValue = String.Format("\"{0}\":\"{1}\"", enemyPropertyName, enemyPropertyValue);
+            Assert.IsTrue(firstResult.Contains(desiredValue));
         }
 
         [TestMethod]
