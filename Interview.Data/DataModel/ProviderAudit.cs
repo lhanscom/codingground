@@ -14,57 +14,9 @@ namespace Interview.Data.DataModel
     {
         private string _remoteApiRoute = ConfigurationManager.AppSettings["RemoteProviderAuditRoute"];
 
-        [JsonProperty("PracticeId", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public int? PracticeId { get; set; }
+        public string[] PropertyNames { get; set; }
 
-        [JsonProperty("ProviderId")]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public int? ProviderId { get; set; }
-
-        [JsonProperty("PatientId", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public int? PatientId { get; set; }
-
-        [JsonProperty("subYear", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string SubYear { get; set; }
-
-        [JsonProperty("MeasureNumber", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string MeasureNumber { get; set; }
-
-        [JsonProperty("MeasureConcept", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string MeasureConcept { get; set; }
-
-        [JsonProperty("AuditDescription", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string AuditDescription { get; set; }
-
-        [JsonProperty("PatientXID", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string PatientXId { get; set; }
-
-        [JsonProperty("FileName", Required = Required.Always)]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public string FileName { get; set; }
-
-        [JsonProperty("FileReceivedDate")]
-        [JsonConverter(typeof(RemoteApiConverter))]
-        public DateTime? FileReceivedDate { get; set; }
-
-        #region "Should Serialize Methods for Json"
-        /// <summary>
-        /// Called by the JsonConvert.SerializeObject method. Any public bool ShouldSerialize{Property name} will work.
-        /// </summary>
-        /// <returns></returns>
-        public bool ShouldSerializeFileReceivedDate()
-        {
-            return FileReceivedDate.HasValue;
-        }
-
-        #endregion
+        public object[] PropertyValues { get; set; }
 
         public override string RemoteApiRoute
         {
@@ -80,27 +32,28 @@ namespace Interview.Data.DataModel
 
                 var jsonDict = new Dictionary<string, string>();
 
-                var propertiesToSerialize = new[] {"PracticeId", "PracticeId", "PracticeId", "PracticeId"};
-
                 HashSet<string> bannedPropertySet = GetBannedProperties();
 
 
                 string message = "";
-                int index = 0;
-                for (int ii = 0; ii < propertiesToSerialize.Length; ++ii)
+                int valueIndex = 0;               
+                foreach (var propertyName in PropertyNames)
                 {
-                    index = ii;
-                    string propertyName = propertiesToSerialize[ii];
-                    var propertyValue = jsonDict[propertiesToSerialize[index]];
-                    if (bannedPropertySet.Contains(propertyName))
-                    {
-                        continue;
-                    }
+                    var propertyValue = PropertyValues[valueIndex];
+                    if (propertyValue == null)
+                        if (bannedPropertySet.Contains(propertyName))
+                            continue;
+                        else
+                        {
+                            propertyValue = "null";
+                        }
 
-                    message += propertyValue;
+
+                    message += String.Format("\"{0}\":\"{1}\",", propertyName, propertyValue);
+                    valueIndex++;
                 }
 
-                string apiMessage = JsonConvert.SerializeObject(this);
+                string apiMessage = message;
                 string result = await ApiResponseWrapper.Send(Remote, RemoteApiRoute, apiMessage);
                 results.Add(String.Format("{0:HH:mm:ss tt} | {1} | {2}", DateTime.Now, result, apiMessage));
                 return results;
@@ -114,7 +67,7 @@ namespace Interview.Data.DataModel
 
         private HashSet<string> GetBannedProperties()
         {
-            return  new HashSet<string>(new [] {"PracticeId", "ProviderId"});
+            return  new HashSet<string>(new [] {"FileName"});
         }
 
         private static string GetApiRequestMesesage(Dictionary<string, string> jsonDict)
