@@ -35,7 +35,7 @@ namespace TestInterview
 
             // Assert
             string firstResult = result == null ? "" : result[0];
-            Assert.IsTrue(firstResult.Contains("\"ArmorId\":\"null\""));
+            Assert.IsTrue(firstResult.Contains("\"ArmorId\":\"null\""), "ArmorId was not serialized when it is supposed to be");
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace TestInterview
 
             // Assert
             string firstResult = result == null ? "" : result[0];
-            Assert.IsFalse(firstResult.Contains("WeaponId"));
+            Assert.IsFalse(firstResult.Contains("WeaponId"), "WeaponId should not be serialized");
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace TestInterview
             // Assert
             string firstResult = result == null ? "" : result[0];
             string desiredValue = String.Format("\"{0}\":\"{1}\"", enemyPropertyName, enemyPropertyValue);
-            Assert.IsTrue(firstResult.Contains(desiredValue));
+            Assert.IsTrue(firstResult.Contains(desiredValue), "EnemyId was not serialized with the correct value!");
         }
 
         [TestMethod]
@@ -80,7 +80,7 @@ namespace TestInterview
 
             // Assert
             string firstResult = result == null ? "" : result[0];
-            Assert.IsTrue(firstResult.Contains("\"FileName\":\"FileName.txt\""));
+            Assert.IsTrue(firstResult.Contains("\"FileName\":\"FileName.txt\""), "FileName was not serialized with the correct value!");
         }
 
 
