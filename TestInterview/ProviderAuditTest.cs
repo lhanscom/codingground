@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -11,72 +12,81 @@ namespace TestInterview
     [TestClass]
     public class ProviderAuditTest
     {
-        private IRemoteHelper _remoteHelp;
-        private Mock<IApiResponseWrapper> apiWrap;
-        private Mock<IMingleWebDatabaseAccess> db;
 
-        
+        /// <summary>
+        /// We need to serialize some data to send to a web api. That
+        /// Web api is cranky and doesn't like it sometimes when we 
+        /// serialize a property with a value of null. These tests make
+        /// sure that we serialize our properties correctly.
+        /// </summary>
 
-        private async Task<string> cTask(string val)
+        [TestMethod]
+        public void Serialize_Should_Serialize_Property_When_Property_Is_Null()
         {
-            return val;
-        }
+            // Arrange
+            Avenger testObj = GetAvenger();
 
-        [TestInitialize]
-        public void Test_Setup()
-        {
-            var remoteHelp = new Mock<IRemoteHelper>();
-            remoteHelp.Setup(t => t.GenerateRemoteToken()).ReturnsAsync(new RemoteToken() { InstanceURL = "", Token = "" });
-            _remoteHelp = remoteHelp.Object;
+            // Act
+            List<string> result = testObj.Serialize();
 
-            db = new Mock<IMingleWebDatabaseAccess>();
-            apiWrap = new Mock<IApiResponseWrapper>();
-
-            apiWrap.Setup(t => t.getResponse(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-
-            apiWrap.Setup(t => t.Send(It.IsAny<IRemoteHelper>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns((IRemoteHelper salesForce, string salesForceApiRoute, string apiMessage) => cTask(apiMessage));
-
-            apiWrap.Setup(t => t.IsSuccessStatusCode)
-                .Returns(false);
+            // Assert
+            string firstResult = result == null ? "" : result[0];
+            Assert.IsTrue(firstResult.Contains("\"ArmorId\":\"null\""));
         }
 
         [TestMethod]
-        public void AuditProvider_Should_Not_Serialize_ProviderId()
+        public void Serialize_Should_Not_Serialize_WeaponId_When_Value_Is_Null()
         {
-            var result = GetProviderAudit().performProcess();
-            var ret = result == null ? "" : result[0];
-            Assert.IsFalse(ret.Contains("ProviderId"));
+            // Arrange
+            Avenger testObj = GetAvenger();
+
+            // Act
+            List<string> result = testObj.Serialize();
+
+            // Assert
+            string firstResult = result == null ? "" : result[0];
+            Assert.IsFalse(firstResult.Contains("WeaponId"));
         }
 
         [TestMethod]
-        public void AuditProvider_PatientId_Is_Mapped_Correctly()
+        public void Serialize_PatientId_Is_Mapped_Correctly()
         {
-            var result = GetProviderAudit().performProcess();
-            var ret = result == null ? "" : result[0];
-            Assert.IsTrue(ret.Contains("\"PatientId\":\"24\""));
+            // Arrange
+            Avenger testObj = GetAvenger();
+
+            // Act
+            List<string> result = testObj.Serialize();
+
+            // Assert
+            string firstResult = result == null ? "" : result[0];
+            Assert.IsTrue(firstResult.Contains("\"EnemyId\":\"24\""));
         }
 
         [TestMethod]
-        public void AuditProvider_FileName_Is_Mapped_Correctly()
+        public void Serialize_FileName_Is_Mapped_Correctly()
         {
-            var result = GetProviderAudit().performProcess();
-            var ret = result == null ? "" : result[0];
-            Assert.IsTrue(ret.Contains("\"FileName\":\"FileName.txt\""));
+            // Arrange
+            Avenger testObj = GetAvenger();
+
+            // Act
+            List<string> result = testObj.Serialize();
+
+            // Assert
+            string firstResult = result == null ? "" : result[0];
+            Assert.IsTrue(firstResult.Contains("\"FileName\":\"FileName.txt\""));
         }
 
 
         #region Helpers
-        private ProviderAudit GetProviderAudit()
+        private Avenger GetAvenger()
         {
-            var providerAudit = new ProviderAudit()
+            var providerAudit = new Avenger()
             {
-                Remote = _remoteHelp,
-                ApiResponseWrapper = apiWrap.Object,
-                DatabaseAccess = db.Object,
-                PropertyNames = new[] { "PracticeID", "ProviderId", "PatientId", "FileName" },
-                PropertyValues = new object[] { 42, null, 24, "FileName.txt" }
+                Remote = new Mock<RemoteHelper>().Object,
+                ApiResponseWrapper = new ApiResponseWrapper(),
+                DatabaseAccess = new MingleWebDatabaseAccess(),
+                PropertyNames = new[] { "AvengerId", "ArmorId", "WeaponId", "EnemyId", "FileName" },
+                PropertyValues = new object[] { 42, null, null, 24, "FileName.txt" }
             };
             return providerAudit;
         }

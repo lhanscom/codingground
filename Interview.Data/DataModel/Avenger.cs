@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Interview.Data.DataModel
 {
-    public class ProviderAudit : RemoteProcessorBase
+    public class Avenger : RemoteProcessorBase
     {
         private string _remoteApiRoute = ConfigurationManager.AppSettings["RemoteProviderAuditRoute"];
 
@@ -24,12 +24,12 @@ namespace Interview.Data.DataModel
             set { _remoteApiRoute = value; }
         }
 
-        public override List<string> performProcess()
+        public override List<string> Serialize()
         {
             var results = new List<string>();
             try
             {
-                HashSet<string> bannedPropertySet = GetBannedProperties();
+                HashSet<string> propertiesNotToSerializeWhenNull = GetNonSerializableProperties();
 
 
                 string message = "";
@@ -38,7 +38,7 @@ namespace Interview.Data.DataModel
                 {
                     var propertyValue = PropertyValues[valueIndex];
                     if (propertyValue == null)
-                        if (bannedPropertySet.Contains(propertyName))
+                        if (propertiesNotToSerializeWhenNull.Contains(propertyName))
                             continue;
                         else
                         {
@@ -57,19 +57,15 @@ namespace Interview.Data.DataModel
             }
             catch (Exception e)
             {
-                results.Add(String.Format("Send Failed while processing ProviderAudit. Error: {0}", e.Message));
+                results.Add(String.Format("Send Failed while processing Avenger. Error: {0}", e.Message));
                 return results;
             }
         }
 
-        private HashSet<string> GetBannedProperties()
+        private HashSet<string> GetNonSerializableProperties()
         {
             return  new HashSet<string>(new [] {"FileName"});
         }
 
-        private static string GetApiRequestMesesage(Dictionary<string, string> jsonDict)
-        {
-            return JObject.FromObject(jsonDict).ToString();
-        }
     }
 }

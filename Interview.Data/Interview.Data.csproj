@@ -96,7 +96,7 @@
     <Compile Include="DataModel\ApiResponseWrapper.cs" />
     <Compile Include="DataModel\IApiResponseWrapper.cs" />
     <Compile Include="DataModel\IRemoteProcessor.cs" />
-    <Compile Include="DataModel\ProviderAudit.cs" />
+    <Compile Include="DataModel\Avenger.cs" />
     <Compile Include="DataModel\RemoteProcessorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoteApi\RemoteHelper.cs" />
