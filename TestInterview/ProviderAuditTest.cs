@@ -31,11 +31,10 @@ namespace TestInterview
             Avenger testObj = GetAvenger();
 
             // Act
-            List<string> result = testObj.Serialize();
+            string result = testObj.Serialize();
 
-            // Assert
-            string firstResult = result == null ? "" : result[0];
-            Assert.IsTrue(firstResult.Contains("\"ArmorId\":\"null\""), "ArmorId was not serialized when it is supposed to be");
+            // Assert            
+            Assert.IsTrue(result.Contains("\"ArmorId\":\"\""), "ArmorId was not serialized when it is supposed to be");
         }
 
         [TestMethod]
@@ -45,11 +44,10 @@ namespace TestInterview
             Avenger testObj = GetAvenger();
 
             // Act
-            List<string> result = testObj.Serialize();
+            string result = testObj.Serialize();
 
             // Assert
-            string firstResult = result == null ? "" : result[0];
-            Assert.IsFalse(firstResult.Contains("WeaponId"), "WeaponId should not be serialized");
+            Assert.IsFalse(result.Contains("WeaponId"), "WeaponId should not be serialized");
         }
 
         [TestMethod]
@@ -57,16 +55,15 @@ namespace TestInterview
         {
             // Arrange
             Avenger testObj = GetAvenger();
-            var enemyPropertyName = "EnemyId";
-            var enemyPropertyValue = "24";
+            const string enemyPropertyName = "EnemyId";
+            const string enemyPropertyValue = "24";
 
             // Act
-            List<string> result = testObj.Serialize();
+            string result = testObj.Serialize();
 
             // Assert
-            string firstResult = result == null ? "" : result[0];
             string desiredValue = String.Format("\"{0}\":\"{1}\"", enemyPropertyName, enemyPropertyValue);
-            Assert.IsTrue(firstResult.Contains(desiredValue), "EnemyId was not serialized with the correct value!");
+            Assert.IsTrue(result.Contains(desiredValue), "EnemyId was not serialized with the correct value!");
         }
 
         [TestMethod]
@@ -76,12 +73,25 @@ namespace TestInterview
             Avenger testObj = GetAvenger();
 
             // Act
-            List<string> result = testObj.Serialize();
+            string result = testObj.Serialize();
 
             // Assert
-            string firstResult = result == null ? "" : result[0];
-            Assert.IsTrue(firstResult.Contains("\"FileName\":\"FileName.txt\""), "FileName was not serialized with the correct value!");
+            Assert.IsTrue(result.Contains("\"FileName\":\"FileName.txt\""), "FileName was not serialized with the correct value!");
         }
+
+        [TestMethod]
+        public void Serialize_Should_Not_Serialize_NemesisName_When_Value_Is_Null()
+        {
+            // Arrange
+            Avenger testObj = GetAvenger();
+
+            // Act
+            string result = testObj.Serialize();
+
+            // Assert
+            Assert.IsFalse(result.Contains("NemesisName"), "NemesisName should not be serialized");
+        }
+
 
 
         #region Helpers
@@ -92,8 +102,8 @@ namespace TestInterview
                 Remote = new Mock<RemoteHelper>().Object,
                 ApiResponseWrapper = new ApiResponseWrapper(),
                 DatabaseAccess = new MingleWebDatabaseAccess(),
-                PropertyNames = new[] { "AvengerId", "ArmorId", "WeaponId", "EnemyId", "FileName" },
-                PropertyValues = new object[] { 42, null, null, 24, "FileName.txt" }
+                PropertyNames = new[] { "AvengerId", "ArmorId", "WeaponId", "EnemyId", "FileName", "NemesisName" },
+                PropertyValues = new object[] { 42, null, null, 24, "FileName.txt", null }
             };
             return providerAudit;
         }

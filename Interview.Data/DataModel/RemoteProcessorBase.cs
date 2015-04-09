@@ -41,6 +41,6 @@ namespace Interview.Data.DataModel
         }
 
 
-        public abstract List<string> Serialize();
+        public abstract string Serialize();
     }
 }

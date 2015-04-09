@@ -11,6 +11,6 @@ namespace Interview.Data.DataModel
         string RemoteApiRoute { get; set; }
         IRemoteHelper Remote { get; set; }
         IApiResponseWrapper ApiResponseWrapper { get; set; }
-        List<string> Serialize();
+        string Serialize();
     }
 }

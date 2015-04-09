@@ -24,47 +24,43 @@ namespace Interview.Data.DataModel
             set { _remoteApiRoute = value; }
         }
 
-        public override List<string> Serialize()
+        public override string Serialize()
         {
-            var results = new List<string>();
             try
             {
                 HashSet<string> propertiesNotToSerializeWhenNull = GetNonSerializableProperties();
 
-
                 string message = "";
                 int valueIndex = 0;               
-                foreach (var propertyName in PropertyNames)
+                foreach (string propertyName in PropertyNames)
                 {
                     var propertyValue = PropertyValues[valueIndex];
-                    if (propertyValue == null)
-                        if (propertiesNotToSerializeWhenNull.Contains(propertyName))
-                            continue;
-                        else
-                        {
-                            propertyValue = "null";
-                        }
-
+                    if (propertyValue == null && propertiesNotToSerializeWhenNull.Contains(propertyName))
+                        continue;
 
                     message += String.Format("\"{0}\":\"{1}\",", propertyName, propertyValue);
                     valueIndex++;
                 }
 
-                string apiMessage = message;
-
-                results.Add(String.Format("{0:HH:mm:ss tt} | {1}", DateTime.Now, apiMessage));
-                return results;
+                return String.Format("{0:HH:mm:ss tt} | {1}", DateTime.Now, message);
             }
             catch (Exception e)
             {
-                results.Add(String.Format("Send Failed while processing Avenger. Error: {0}", e.Message));
-                return results;
+                return String.Format("Send Failed while processing Avenger. Error: {0}", e.Message);
             }
         }
 
+        /// <summary>
+        /// These properties should not be serialized when they contain a null value.
+        /// </summary>
+        /// <returns>A HashSet of property names</returns>
         private HashSet<string> GetNonSerializableProperties()
         {
-            return  new HashSet<string>(new [] {"FileName"});
+            return  new HashSet<string>(new []
+            {
+                "FileName",
+                "NemesisName"
+            });
         }
 
     }
