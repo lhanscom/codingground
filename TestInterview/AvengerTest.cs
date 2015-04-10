@@ -10,7 +10,7 @@ using Interview.Data.RemoteApi;
 namespace TestInterview
 {
     [TestClass]
-    public class ProviderAuditTest
+    public class AvengerTest
     {
 
         /// <summary>
@@ -55,15 +55,12 @@ namespace TestInterview
         {
             // Arrange
             Avenger testObj = GetAvenger();
-            const string enemyPropertyName = "EnemyId";
-            const string enemyPropertyValue = "24";
 
             // Act
             string result = testObj.Serialize();
 
             // Assert
-            string desiredValue = String.Format("\"{0}\":\"{1}\"", enemyPropertyName, enemyPropertyValue);
-            Assert.IsTrue(result.Contains(desiredValue), "EnemyId was not serialized with the correct value!");
+            Assert.IsTrue(result.Contains("\"EnemyId\":\"24\""), "EnemyId was not serialized with the correct value!");
         }
 
         [TestMethod]

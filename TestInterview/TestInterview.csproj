@@ -101,7 +101,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ProviderAuditTest.cs" />
+    <Compile Include="AvengerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
