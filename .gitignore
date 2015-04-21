@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.sln.DotSettings.user
 
 # Build results
 [Dd]ebug/
