@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Interview.Data.DataModel
+namespace InterviewCodeTest
 {
     public class Avenger
     {

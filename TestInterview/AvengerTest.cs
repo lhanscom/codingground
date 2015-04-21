@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Interview.Data.DataModel;
+using InterviewCodeTest;
 
 namespace TestInterview
 {

@@ -96,9 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Interview.Data\Interview.Data.csproj">
+    <ProjectReference Include="..\InterviewCodeTest\InterviewCodeTest.csproj">
       <Project>{7be8b84b-cd75-4cf3-a028-9bde20f20329}</Project>
-      <Name>Interview.Data</Name>
+      <Name>InterviewCodeTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

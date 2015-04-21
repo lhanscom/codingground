@@ -1,8 +1,0 @@
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\bin\QA\SalesForceApiUpdater.Data.dll.config
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\bin\QA\SalesForceApiUpdater.Data.dll
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\bin\QA\SalesForceApiUpdater.Data.pdb
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\bin\QA\Newtonsoft.Json.dll
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\bin\QA\Newtonsoft.Json.xml
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\obj\QA\SalesForceApiUpdater.Data.csprojResolveAssemblyReference.cache
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\obj\QA\SalesForceApiUpdater.Data.dll
-C:\Users\lukeh\Documents\_Source\_GitRepos\Interview\SalesForceApiUpdater.Data\obj\QA\SalesForceApiUpdater.Data.pdb

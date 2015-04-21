@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interview.Data", "Interview.Data\Interview.Data.csproj", "{7BE8B84B-CD75-4CF3-A028-9BDE20F20329}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewCodeTest", "InterviewCodeTest\InterviewCodeTest.csproj", "{7BE8B84B-CD75-4CF3-A028-9BDE20F20329}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInterview", "TestInterview\TestInterview.csproj", "{F4306EF0-BEC8-4638-B21F-F9054F504D1D}"
 EndProject
