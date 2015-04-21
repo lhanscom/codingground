@@ -1,30 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Interview.Data.Utility;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Interview.Data.DataModel
 {
-    public class Avenger : RemoteProcessorBase
+    public class Avenger
     {
-        private string _remoteApiRoute = ConfigurationManager.AppSettings["RemoteProviderAuditRoute"];
-
         public string[] PropertyNames { get; set; }
 
         public object[] PropertyValues { get; set; }
 
-        public override string RemoteApiRoute
-        {
-            get { return _remoteApiRoute; }
-            set { _remoteApiRoute = value; }
-        }
-
-        public override string Serialize()
+        public string Serialize()
         {
             try
             {

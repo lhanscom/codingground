@@ -74,38 +74,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\ConnectionAccess.cs" />
-    <Compile Include="DataAccess\IMingleWebDatabaseAccess.cs" />
-    <Compile Include="DataAccess\MingleWebDatabaseAccess.cs" />
-    <Compile Include="DataModel\ApiResponseWrapper.cs" />
-    <Compile Include="DataModel\IApiResponseWrapper.cs" />
-    <Compile Include="DataModel\IRemoteProcessor.cs" />
     <Compile Include="DataModel\Avenger.cs" />
-    <Compile Include="DataModel\RemoteProcessorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RemoteApi\RemoteHelper.cs" />
-    <Compile Include="RemoteApi\RemoteToken.cs" />
-    <Compile Include="Utility\ExtensionMethods.cs" />
-    <Compile Include="Utility\RemoteApiConverter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using Interview.Data.DataAccess;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Interview.Data.DataModel;
-using Interview.Data.RemoteApi;
 
 namespace TestInterview
 {
@@ -96,9 +90,6 @@ namespace TestInterview
         {
             var providerAudit = new Avenger()
             {
-                Remote = new Mock<RemoteHelper>().Object,
-                ApiResponseWrapper = new ApiResponseWrapper(),
-                DatabaseAccess = new MingleWebDatabaseAccess(),
                 PropertyNames = new[] { "AvengerId", "ArmorId", "WeaponId", "EnemyId", "FileName", "NemesisName" },
                 PropertyValues = new object[] { 42, null, null, 24, "FileName.txt", null }
             };
