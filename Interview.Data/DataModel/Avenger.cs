@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 
 namespace Interview.Data.DataModel
 {
@@ -40,7 +39,7 @@ namespace Interview.Data.DataModel
         /// These properties should not be serialized when they contain a null value.
         /// </summary>
         /// <returns>A HashSet of property names</returns>
-        private HashSet<string> GetNonSerializableProperties()
+        private static HashSet<string> GetNonSerializableProperties()
         {
             return  new HashSet<string>(new []
             {
